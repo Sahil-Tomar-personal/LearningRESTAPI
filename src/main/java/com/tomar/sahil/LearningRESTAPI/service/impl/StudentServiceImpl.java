@@ -1,5 +1,6 @@
 package com.tomar.sahil.LearningRESTAPI.service.impl;
 
+import com.tomar.sahil.LearningRESTAPI.dto.AddStudentDto;
 import com.tomar.sahil.LearningRESTAPI.dto.StudentDto;
 import com.tomar.sahil.LearningRESTAPI.entity.Student;
 import com.tomar.sahil.LearningRESTAPI.repository.StudentRepository;
@@ -29,5 +30,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDto getStudentById(Long id) {
         return modelMapper.map(studentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("couldn't find student with id: " + id)), StudentDto.class);
+    }
+
+    @Override
+    public StudentDto createNewStudent(AddStudentDto newStudentDto) {
+        return modelMapper.map(studentRepository.save(modelMapper.map(newStudentDto, Student.class)), StudentDto.class);
     }
 }
