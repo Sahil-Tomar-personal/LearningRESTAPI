@@ -33,7 +33,11 @@ public class StudentController {
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteStudentById(@PathVariable Long id) {
-        studentService.deletebyId(id);
+        studentService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<StudentDto> updateStudentById(@PathVariable Long id, @RequestBody AddStudentDto newStudentDto) {
+        return ResponseEntity.ok(studentService.updateStudent(id, newStudentDto));
     }
 }

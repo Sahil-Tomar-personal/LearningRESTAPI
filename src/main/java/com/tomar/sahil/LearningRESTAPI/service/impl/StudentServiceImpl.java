@@ -38,10 +38,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deletebyId(Long id) {
+    public void deleteById(Long id) {
         if (!studentRepository.existsById(id)) {
             throw new IllegalArgumentException("student with id: " + id + " not found");
         }
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public StudentDto updateStudent(Long id, AddStudentDto newStudentDto) {
+        Student student = studentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("student with id: " + id + " not found"));
+        modelMapper.map(newStudentDto, student);
+        student = studentRepository.save(student);
+        return modelMapper.map(student, StudentDto.class);
     }
 }
