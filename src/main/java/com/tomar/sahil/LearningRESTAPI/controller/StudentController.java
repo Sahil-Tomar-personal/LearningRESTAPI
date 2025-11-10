@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/student")
@@ -39,5 +40,9 @@ public class StudentController {
     @PutMapping("/{id}")
     public ResponseEntity<StudentDto> updateStudentById(@PathVariable Long id, @RequestBody AddStudentDto newStudentDto) {
         return ResponseEntity.ok(studentService.updateStudent(id, newStudentDto));
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<StudentDto> patchStudentById(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        return ResponseEntity.ok(studentService.updateStudentPartial(id, updates));
     }
 }
